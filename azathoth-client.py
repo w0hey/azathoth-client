@@ -14,6 +14,8 @@ from twisted.internet import reactor, protocol
 from twisted.python import log
 log.startLogging(sys.stdout)
 
+from protocol.controlfactory import ControlFactory
+
 class AzathothClient:
     def __init__(self):
         self.connected = False
