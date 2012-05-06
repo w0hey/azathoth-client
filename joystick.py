@@ -55,13 +55,13 @@ class Joystick(gobject.GObject):
         except Exception,ex: 
             #raise an exception 
             raise Exception( ex ) 
-
-    def __del__(self):
-        # So, this is the form you choose for the destructor... Very well.
+    def shutdown(self):
+        """
+        Remove IO watch and close device for cleanup
+        """
         gobject.source_remove(self.source)
         self.device.close()
-        gobject.GObject.__del__(self)
-         
+
     def read_buttons(self, arg0='', arg1=''): 
         ''' read the button and axis press event from the joystick device 
         and emit a signal containing the event data 
