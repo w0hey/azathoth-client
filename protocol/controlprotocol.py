@@ -33,6 +33,10 @@ class ControlProtocol(NetstringReceiver):
         string = 'C' + chr(x) + chr(y)
         self.sendString(string)
 
+    def cmd_cal_store(self):
+        string = 'W'
+        self.sendString(string)
+
     def send_joystick_command(self, x, y):
         string = 'J' + chr(x) + chr(y)
         self.sendString(string)
