@@ -102,6 +102,7 @@
                     <child>
                       <object class="GtkMenuItem" id="imi_calibration">
                         <property name="visible">True</property>
+                        <property name="sensitive">False</property>
                         <property name="can_focus">False</property>
                         <property name="use_action_appearance">False</property>
                         <property name="label" translatable="yes">Drive calibration...</property>
@@ -162,6 +163,7 @@
             <child>
               <object class="GtkToolButton" id="tb_stop">
                 <property name="visible">True</property>
+                <property name="sensitive">False</property>
                 <property name="can_focus">False</property>
                 <property name="use_action_appearance">False</property>
                 <property name="use_underline">True</property>
@@ -176,6 +178,7 @@
             <child>
               <object class="GtkToolButton" id="tb_calibrate">
                 <property name="visible">True</property>
+                <property name="sensitive">False</property>
                 <property name="can_focus">False</property>
                 <property name="use_action_appearance">False</property>
                 <property name="label" translatable="yes">Calibration</property>
@@ -272,7 +275,7 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkVBox" id="vbox2">
+                  <object class="GtkVBox" id="table_joystick">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <child>
@@ -295,12 +298,13 @@
                           <object class="GtkRadioButton" id="rb_js_enable">
                             <property name="label" translatable="yes">Enable</property>
                             <property name="visible">True</property>
+                            <property name="sensitive">False</property>
                             <property name="can_focus">True</property>
                             <property name="receives_default">False</property>
                             <property name="use_action_appearance">False</property>
                             <property name="draw_indicator">False</property>
                             <property name="group">rb_js_disable</property>
-                            <signal name="clicked" handler="on_rb_js_enable_clicked" swapped="no"/>
+                            <signal name="toggled" handler="on_rb_js_enable_toggled" swapped="no"/>
                           </object>
                           <packing>
                             <property name="expand">True</property>
@@ -312,12 +316,12 @@
                           <object class="GtkRadioButton" id="rb_js_disable">
                             <property name="label" translatable="yes">Disable</property>
                             <property name="visible">True</property>
+                            <property name="sensitive">False</property>
                             <property name="can_focus">True</property>
                             <property name="receives_default">False</property>
                             <property name="use_action_appearance">False</property>
                             <property name="active">True</property>
                             <property name="draw_indicator">False</property>
-                            <signal name="clicked" handler="on_rb_js_disable_clicked" swapped="no"/>
                           </object>
                           <packing>
                             <property name="expand">True</property>

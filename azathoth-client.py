@@ -38,6 +38,7 @@ class AzathothClient:
 
         self.joystick_x = 0
         self.joystick_y = 0
+        self.joystick_enabled = False
 
         self.mainWindow.show_all()
 
@@ -51,32 +52,51 @@ class AzathothClient:
         log.msg("Disconnecting")
         self.connection.disconnect()
 
+    def setUiState(self, state):
+        connected_controls = ('btn_disconnect', 'rb_js_enable', 'rb_js_disable',
+            'tb_stop', 'tb_calibrate', 'imi_calibration')
+        if state == 'connecting':
+            self.btn_disconnect.set_sensitive(True)
+            self.btn_connect.set_sensitive(False)
+        elif state == 'connected':
+            for control in connected_controls:
+                self.builder.get_object(control).set_sensitive(True)
+        elif state == 'disconnected':
+            if self.joystick_enabled:
+                self.rb_js_enable.set_active(False)
+                self.rb_js_disable.set_active(True)
+                self.disableJoystick()
+            for control in connected_controls:
+                self.builder.get_object(control).set_sensitive(False)
+                self.btn_connect.set_sensitive(True)
+
     def enableJoystick(self):
+        self.joystick_enabled = True
         self.joystick = Joystick(0)
         self.js_handler = self.joystick.connect('axis', self.axis_event)
 
     def disableJoystick(self):
-        self.joystick.disconnect(self.js_handler)
-        self.joystick.shutdown()
-        self.joystick = None
+        self.joystick_enabled = False
+        if self.joystick is not None:
+            self.joystick.disconnect(self.js_handler)
+            self.joystick.shutdown()
+            self.joystick = None
 
     def onStartConnection(self):
-        self.btn_connect.set_sensitive(False)
+        self.setUiState('connecting')
 
     def onConnect(self):
-        self.btn_disconnect.set_sensitive(True)
-        self.btn_connect.set_sensitive(False)
         self.statusbar.remove_all(self.context_id)
         self.statusbar.push(self.context_id, 'Connected')
+        self.setUiState('connected')
 
     def onConnectionLost(self):
-        self.btn_disconnect.set_sensitive(False)
-        self.btn_connect.set_sensitive(True)
+        self.setUiState('disconnected')
         self.statusbar.remove_all(self.context_id)
         self.statusbar.push(self.context_id, 'Disconnected')
 
     def onConnectionFailed(self, reason):
-        self.btn_connect.set_sensitive(True)
+        self.setUiState('disconnected')
         self.statusbar.remove_all(self.context_id)
         self.statusbar.push(self.context_id, 'Connection failed!')
 
@@ -101,12 +121,10 @@ class AzathothClient:
     def on_btn_disconnect_clicked(self, widget):
         self.disconnect()
 
-    def on_rb_js_enable_clicked(self, widget):
-        if self.rb_js_enable.get_active():
+    def on_rb_js_enable_toggled(self, btn):
+        if btn.get_active():
             self.enableJoystick()
-
-    def on_rb_js_disable_clicked(self, widget):
-        if self.rb_js_disable.get_active():
+        else: 
             self.disableJoystick()
 
     def axis_event(self, object, axis, value, init):
