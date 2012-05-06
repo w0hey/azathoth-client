@@ -51,10 +51,16 @@ class Joystick(gobject.GObject):
             #open the joystick device 
             self.device = open(device) 
             #keep an eye on the device, when there is data to read, execute the read function 
-            gobject.io_add_watch(self.device,gobject.IO_IN,self.read_buttons) 
+            self.source = gobject.io_add_watch(self.device,gobject.IO_IN,self.read_buttons) 
         except Exception,ex: 
             #raise an exception 
             raise Exception( ex ) 
+
+    def __del__(self):
+        # So, this is the form you choose for the destructor... Very well.
+        gobject.source_remove(self.source)
+        self.device.close()
+        gobject.GObject.__del__(self)
          
     def read_buttons(self, arg0='', arg1=''): 
         ''' read the button and axis press event from the joystick device 
