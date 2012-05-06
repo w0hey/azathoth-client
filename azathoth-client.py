@@ -83,6 +83,7 @@ class AzathothClient:
     def onUpdateAxis(self):
         self.label_js_x.set_label(str(self.joystick_x))
         self.label_js_y.set_label(str(self.joystick_y))
+        self.factory.control.send_joystick_command(self.joystick_x, self.joystick_y)
 
     def on_window_main_delete_event(self, win, event):
         reactor.stop()

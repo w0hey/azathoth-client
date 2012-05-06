@@ -1,3 +1,5 @@
+import struct
+
 from twisted.internet import defer
 from twisted.protocols.basic import NetstringReceiver
 from twisted.python import log
@@ -38,7 +40,8 @@ class ControlProtocol(NetstringReceiver):
         self.sendString(string)
 
     def send_joystick_command(self, x, y):
-        string = 'J' + chr(x) + chr(y)
+        # x and y are signed, so a simple chr(x) won't work.
+        string = 'J' + struct.pack("!bb", x, y)
         self.sendString(string)
 
 
