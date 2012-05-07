@@ -72,7 +72,7 @@ class AzathothClient:
 
     def enableJoystick(self):
         self.joystick_enabled = True
-        self.joystick = Joystick(0)
+        self.joystick = Joystick(1)
         self.js_handler = self.joystick.connect('axis', self.axis_event)
 
     def disableJoystick(self):
@@ -128,9 +128,15 @@ class AzathothClient:
             self.disableJoystick()
 
     def axis_event(self, object, axis, value, init):
+        if init == 128:
+            # Ignore this event. One gets sent per axis when the joystick
+            # is initialized. I should really find out why.
+            return
         if axis == 0:
+            # dividing by 256 scales the value to fit within a signed char
             self.joystick_x = value / 256
         if axis == 1:
+            # this axis needs to be inverted
             self.joystick_y = -value / 256
         self.onUpdateAxis()
 
