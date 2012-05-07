@@ -79,7 +79,7 @@ class Joystick(gobject.GObject):
         elif event == self.EVENT_BUTTON: 
             signal = "button" 
         if signal: 
-            print("%s %s %s %s" % (signal,number,value,init) ) 
+            #print("%s %s %s %s" % (signal,number,value,init) ) 
             self.emit(signal,number,value,init) 
          
         return True 
