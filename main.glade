@@ -361,10 +361,16 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkLabel" id="label_js_x">
+                          <object class="GtkEventBox" id="eb_js_x">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
-                            <property name="label" translatable="yes">N/A</property>
+                            <child>
+                              <object class="GtkLabel" id="label_js_x">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <property name="label" translatable="yes">N/A</property>
+                              </object>
+                            </child>
                           </object>
                           <packing>
                             <property name="left_attach">1</property>
@@ -372,10 +378,16 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkLabel" id="label_js_y">
+                          <object class="GtkEventBox" id="eb_js_y">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
-                            <property name="label" translatable="yes">N/A</property>
+                            <child>
+                              <object class="GtkLabel" id="label_js_y">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <property name="label" translatable="yes">N/A</property>
+                              </object>
+                            </child>
                           </object>
                           <packing>
                             <property name="left_attach">1</property>

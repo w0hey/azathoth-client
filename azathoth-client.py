@@ -35,6 +35,8 @@ class AzathothClient:
         self.label_js_y = self.builder.get_object('label_js_y')
         self.rb_js_enable = self.builder.get_object('rb_js_enable')
         self.rb_js_disable = self.builder.get_object('rb_js_disable')
+        self.eb_js_x = self.builder.get_object('eb_js_x')
+        self.eb_js_y = self.builder.get_object('eb_js_y')
 
         self.joystick_x = 0
         self.joystick_y = 0
@@ -72,7 +74,7 @@ class AzathothClient:
 
     def enableJoystick(self):
         self.joystick_enabled = True
-        self.joystick = Joystick(1)
+        self.joystick = Joystick(0)
         self.js_handler = self.joystick.connect('axis', self.axis_event)
 
     def disableJoystick(self):
@@ -101,6 +103,15 @@ class AzathothClient:
         self.statusbar.push(self.context_id, 'Connection failed!')
 
     def onUpdateAxis(self):
+        if self.joystick_x != 0:
+            self.eb_js_x.modify_bg(gtk.STATE_NORMAL, gtk.gdk.Color('#00FF00'))
+        elif self.joystick_x == 0:
+            self.eb_js_x.modify_bg(gtk.STATE_NORMAL, None)
+        if self.joystick_y != 0:
+            self.eb_js_y.modify_bg(gtk.STATE_NORMAL, gtk.gdk.Color('#00FF00'))
+        elif self.joystick_y == 0:
+            self.eb_js_y.modify_bg(gtk.STATE_NORMAL, None)
+
         self.label_js_x.set_label(str(self.joystick_x))
         self.label_js_y.set_label(str(self.joystick_y))
         self.factory.control.send_joystick_command(self.joystick_x, self.joystick_y)
