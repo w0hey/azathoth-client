@@ -44,5 +44,9 @@ class ControlProtocol(NetstringReceiver):
         string = 'J' + struct.pack("!bb", x, y)
         self.sendString(string)
 
+    def send_softstop_command(self):
+        string = 'S'
+        self.sendString(string)
+
 
 

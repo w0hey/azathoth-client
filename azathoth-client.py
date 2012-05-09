@@ -138,6 +138,9 @@ class AzathothClient:
         else: 
             self.disableJoystick()
 
+    def on_tb_stop_clicked(self, btn):
+        self.factory.control.send_softstop_command()
+
     def axis_event(self, object, axis, value, init):
         if init == 128:
             # Ignore this event. One gets sent per axis when the joystick
