@@ -38,6 +38,8 @@ class AzathothClient:
         self.eb_js_x = self.builder.get_object('eb_js_x')
         self.eb_js_y = self.builder.get_object('eb_js_y')
 
+        self.prev_x = 0
+        self.prev_y = 0
         self.joystick_x = 0
         self.joystick_y = 0
         self.joystick_enabled = False
@@ -74,7 +76,7 @@ class AzathothClient:
 
     def enableJoystick(self):
         self.joystick_enabled = True
-        self.joystick = Joystick(0)
+        self.joystick = Joystick(1)
         self.js_handler = self.joystick.connect('axis', self.axis_event)
 
     def disableJoystick(self):
@@ -148,10 +150,16 @@ class AzathothClient:
             return
         if axis == 0:
             # dividing by 256 scales the value to fit within a signed char
+            self.prev_x = self.joystick_x
             self.joystick_x = value / 256
+            if self.joystick_x == self.prev_x:
+                return
         if axis == 1:
             # this axis needs to be inverted
+            self.prev_y = self.joystick_y
             self.joystick_y = -value / 256
+            if self.joystick_y == self.prev_y:
+                return
         self.onUpdateAxis()
 
     def button_event(self, object, button, value, init):
