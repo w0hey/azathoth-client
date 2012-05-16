@@ -117,6 +117,19 @@ class AzathothClient:
         self.label_js_y.set_label(str(self.joystick_y))
         self.factory.control.send_joystick_command(self.joystick_x, self.joystick_y)
 
+    def onStatusUpdate(self, status, xpos, ypos, xval, yval):
+        moving = status & 0x10
+        if moving:
+            self.label_drivestatus.set_label("MOVING")
+            self.eb_drivestatus.modify_bg(gtk.STATE_NORMAL, gtk.gdk.Color('#00FF00')
+        else:
+            self.label_drivestatus.set_label("STOPPED")
+            self.eb_drivestatus.modify_bg(gtk.STATE_NORMAL, None)
+        self.label_drive_x.set_label(str(xpos))
+        self.label_drive_y.set_label(str(ypos))
+        self.label_raw_x.set_label(str(xval))
+        self.label_raw_y.set_label(str(yval))
+
     def on_window_main_delete_event(self, win, event):
         reactor.stop()
 

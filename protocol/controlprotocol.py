@@ -25,6 +25,14 @@ class ControlProtocol(NetstringReceiver):
             d['eeprom_x'] = eeprom_x
             d['eeprom_y'] = eeprom_y
             self.calibrate_d.callback(d)
+        elif string[0] == 's':
+            # status response
+            status = ord(string[1])
+            xpos = ord(string[2])
+            ypos = ord(string[3])
+            xval = ord(string[4])
+            yval = ord(string[5])
+            self.factory.app.onStatusUpdate(status, xpos, ypos, xval, yval)
 
     def req_cal_values(self):
         self.calibrate_d = defer.Deferred()
