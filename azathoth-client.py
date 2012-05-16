@@ -26,17 +26,14 @@ class AzathothClient:
         self.mainWindow = self.builder.get_object('window_main')
 
         self.builder.connect_signals(self)
+        
+        # let's just add widgets as members programatically.
+        widgets = ('btn_disconnect', 'btn_connect', 'statusbar', 'label_js_x',
+            'label_js_y', 'rb_js_enable', 'rb_js_disable', 'eb_js_x', 'eb_js_y')
+        for wid in widgets:
+            setattr(self, wid, self.builder.get_object(wid))
 
-        self.btn_disconnect = self.builder.get_object('btn_disconnect')
-        self.btn_connect = self.builder.get_object('btn_connect')
-        self.statusbar = self.builder.get_object('statusbar')
         self.context_id = self.statusbar.get_context_id("Azathoth")
-        self.label_js_x = self.builder.get_object('label_js_x')
-        self.label_js_y = self.builder.get_object('label_js_y')
-        self.rb_js_enable = self.builder.get_object('rb_js_enable')
-        self.rb_js_disable = self.builder.get_object('rb_js_disable')
-        self.eb_js_x = self.builder.get_object('eb_js_x')
-        self.eb_js_y = self.builder.get_object('eb_js_y')
 
         self.prev_x = 0
         self.prev_y = 0
