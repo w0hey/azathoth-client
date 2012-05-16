@@ -29,7 +29,9 @@ class AzathothClient:
         
         # let's just add widgets as members programatically.
         widgets = ('btn_disconnect', 'btn_connect', 'statusbar', 'label_js_x',
-            'label_js_y', 'rb_js_enable', 'rb_js_disable', 'eb_js_x', 'eb_js_y')
+            'label_js_y', 'rb_js_enable', 'rb_js_disable', 'eb_js_x', 'eb_js_y',
+            'eb_drivestatus', 'label_drivestatus', 'label_drive_x', 'label_drive_y',
+            'label_raw_x', 'label_raw_y')
         for wid in widgets:
             setattr(self, wid, self.builder.get_object(wid))
 
