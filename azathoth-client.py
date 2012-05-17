@@ -121,7 +121,7 @@ class AzathothClient:
         moving = status & 0x10
         if moving:
             self.label_drivestatus.set_label("MOVING")
-            self.eb_drivestatus.modify_bg(gtk.STATE_NORMAL, gtk.gdk.Color('#00FF00')
+            self.eb_drivestatus.modify_bg(gtk.STATE_NORMAL, gtk.gdk.Color('#00FF00'))
         else:
             self.label_drivestatus.set_label("STOPPED")
             self.eb_drivestatus.modify_bg(gtk.STATE_NORMAL, None)
