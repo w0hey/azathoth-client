@@ -39,6 +39,7 @@ class AzathothClient:
 
         self.prev_x = 0
         self.prev_y = 0
+        self.joystick = None
         self.joystick_x = 0
         self.joystick_y = 0
         self.joystick_enabled = False
@@ -75,7 +76,14 @@ class AzathothClient:
 
     def enableJoystick(self):
         self.joystick_enabled = True
-        self.joystick = Joystick(1)
+        try:
+            self.joystick = Joystick(1)
+        except:
+            self.joystick_enabled = False
+            self.rb_js_enable.set_active(True)
+            self.rb_js_disable.set_active(False)
+            self.statusbar.push(self.context_id, 'Joystick device error')
+            return
         self.js_handler = self.joystick.connect('axis', self.axis_event)
 
     def disableJoystick(self):
