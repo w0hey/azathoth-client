@@ -57,7 +57,7 @@ class AzathothClient:
 
     def setUiState(self, state):
         connected_controls = ('btn_disconnect', 'rb_js_enable', 'rb_js_disable',
-            'tb_stop', 'tb_calibrate', 'imi_calibration')
+            'tb_estop', 'tb_calibrate', 'imi_calibration')
         if state == 'connecting':
             self.btn_disconnect.set_sensitive(True)
             self.btn_connect.set_sensitive(False)
@@ -152,8 +152,11 @@ class AzathothClient:
         else: 
             self.disableJoystick()
 
-    def on_tb_stop_clicked(self, btn):
-        self.factory.control.send_softstop_command()
+    def on_tb_estop_clicked(self, btn):
+        self.factory.control.send_estop_command()
+
+    def on_tb_reset_clicked(self, btn):
+        self.factory.control.send_reset_command()
 
     def axis_event(self, object, axis, value, init):
         if init == 128:
