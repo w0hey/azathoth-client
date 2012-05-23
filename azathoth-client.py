@@ -89,6 +89,8 @@ class AzathothClient:
 
     def disableJoystick(self):
         self.joystick_enabled = False
+        self.rb_js_enable.set_active(True)
+        self.rb_js_disable.set_active(False)
         if self.joystick is not None:
             self.joystick.disconnect(self.js_handler)
             self.joystick.shutdown()
@@ -107,6 +109,8 @@ class AzathothClient:
         self.setUiState('disconnected')
         self.statusbar.remove_all(self.context_id)
         self.statusbar.push(self.context_id, 'Disconnected')
+        if self.calDlg is not None:
+            self.calDlg.destroy()
 
     def onConnectionFailed(self, reason):
         self.setUiState('disconnected')
@@ -147,7 +151,7 @@ class AzathothClient:
         reactor.stop()
 
     def on_imi_calibration_activate(self, widget):
-        dlg = CalibrationDialog(self)
+        self.calDlg = CalibrationDialog(self)
 
     def on_btn_connect_clicked(self, widget):
         host = self.builder.get_object('entry_host').get_text()
@@ -167,6 +171,9 @@ class AzathothClient:
 
     def on_tb_reset_clicked(self, btn):
         self.factory.control.send_reset_command()
+
+    def on_tb_calibrate_clicked(self, btn):
+        self.calDlg = CalibrationDialog(self)
 
     def axis_event(self, object, axis, value, init):
         if init == 128:
