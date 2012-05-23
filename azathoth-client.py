@@ -85,6 +85,7 @@ class AzathothClient:
             self.statusbar.push(self.context_id, 'Joystick device error')
             return
         self.js_handler = self.joystick.connect('axis', self.axis_event)
+        self.factory.control.send_select_command(True)
 
     def disableJoystick(self):
         self.joystick_enabled = False
@@ -92,6 +93,7 @@ class AzathothClient:
             self.joystick.disconnect(self.js_handler)
             self.joystick.shutdown()
             self.joystick = None
+        self.factory.control.send_select_command(False)
 
     def onStartConnection(self):
         self.setUiState('connecting')
