@@ -31,7 +31,9 @@ class AzathothClient:
         widgets = ('btn_disconnect', 'btn_connect', 'statusbar', 'label_js_x',
             'label_js_y', 'rb_js_enable', 'rb_js_disable', 'eb_js_x', 'eb_js_y',
             'eb_drivestatus', 'label_drivestatus', 'label_drive_x', 'label_drive_y',
-            'label_raw_x', 'label_raw_y')
+            'label_raw_x', 'label_raw_y', 'label_select_cmd', 'label_select_act',
+            'eb_select_cmd', 'eb_select_act', 'label_estop_cmd', 'label_estop_act',
+            'eb_estop_cmd', 'eb_estop_act')
         for wid in widgets:
             setattr(self, wid, self.builder.get_object(wid))
 
@@ -58,7 +60,8 @@ class AzathothClient:
 
     def setUiState(self, state):
         connected_controls = ('btn_disconnect', 'rb_js_enable', 'rb_js_disable',
-            'tb_estop', 'tb_calibrate', 'imi_calibration')
+            'btn_select', 'btn_deselect', 'tb_estop', 'tb_reset', 'tb_calibrate',
+            'imi_calibration')
         if state == 'connecting':
             self.btn_disconnect.set_sensitive(True)
             self.btn_connect.set_sensitive(False)
@@ -132,13 +135,44 @@ class AzathothClient:
         self.factory.control.send_joystick_command(self.joystick_x, self.joystick_y)
 
     def onStatusUpdate(self, status, xpos, ypos, xval, yval):
-        moving = status & 0x10
+        estop_act = (status & 0x01 == 0x01)
+        estop_cmd = (status & 0x02 == 0x02)
+        select_act = (status & 0x04 == 0x04)
+        select_cmd = (status & 0x08 == 0x08)
+        moving = (status & 0x10 == 0x10)
         if moving:
             self.label_drivestatus.set_label("MOVING")
             self.eb_drivestatus.modify_bg(gtk.STATE_NORMAL, gtk.gdk.Color('#00FF00'))
         else:
             self.label_drivestatus.set_label("STOPPED")
             self.eb_drivestatus.modify_bg(gtk.STATE_NORMAL, None)
+        
+        if estop_act:
+            self.label_estop_act.set_label("RUN")
+            self.eb_estop_act.modify_bg(gtk.STATE_NORMAL, gtk.gdk.Color('#00FF00'))
+        else:
+            self.label_estop_act.set_label("STOP")
+            self.eb_estop_act.modify_bg(gtk.STATE_NORMAL, gtk.gdk.Color('#FF0000'))
+        if estop_cmd:
+            self.label_estop_cmd.set_label("RUN")
+            self.eb_estop_cmd.modify_bg(gtk.STATE_NORMAL, gtk.gdk.Color('#00FF00'))
+        else:
+            self.label_estop_cmd.set_label("STOP")
+            self.eb_estop_cmd.modify_bg(gtk.STATE_NORMAL, gtk.gdk.Color('#FF0000'))
+        
+        if select_act:
+            self.label_select_act.set_label("ROBOT")
+            self.eb_select_act.modify_bg(gtk.STATE_NORMAL, gtk.gdk.Color('#00FF00'))
+        else:
+            self.label_select_act.set_label("CHAIR")
+            self.eb_select_act.modify_bg(gtk.STATE_NORMAL, gtk.gdk.Color('#00FFFF'))
+        if select_cmd:
+            self.label_select_cmd.set_label("ROBOT")
+            self.eb_select_cmd.modify_bg(gtk.STATE_NORMAL, gtk.gdk.Color('#00FF00'))
+        else:
+            self.label_select_cmd.set_label("CHAIR")
+            self.eb_select_cmd.modify_bg(gtk.STATE_NORMAL, gtk.gdk.Color('#00FFFF'))
+
         self.label_drive_x.set_label(str(xpos))
         self.label_drive_y.set_label(str(ypos))
         self.label_raw_x.set_label(str(xval))
@@ -165,6 +199,12 @@ class AzathothClient:
             self.enableJoystick()
         else: 
             self.disableJoystick()
+
+    def on_btn_select_clicked(self, btn):
+        self.factory.control.send_select_command(True)
+
+    def on_btn_deselect_clicked(self, btn):
+        self.factory.control.send_select_command(False)
 
     def on_tb_estop_clicked(self, btn):
         self.factory.control.send_estop_command()
