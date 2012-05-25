@@ -7,7 +7,7 @@ from twisted.python import log
 class ControlProtocol(NetstringReceiver):
     def connectionMade(self):
         self.factory.control = self
-        self.factory.app.onConnect()
+        self.factory.model.onConnect()
 
     def connectionLost(self, reason):
         self.factory.control = None

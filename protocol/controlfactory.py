@@ -6,18 +6,18 @@ from protocol.controlprotocol import ControlProtocol
 class ControlFactory(protocol.ClientFactory):
     protocol = ControlProtocol
 
-    def __init__(self, application):
-        self.app = application
+    def __init__(self, model):
+        self.model = model
         self.control = None
 
     def startedConnecting(self, connector):
-        self.app.onStartConnection()
+        self.model.onStartConnection()
 
     def clientConnectionFailed(self, connector, reason):
         log.err(reason.getErrorMessage())
-        self.app.onConnectionFailed(reason)
+        self.model.onConnectionFailed(reason)
 
     def clientConnectionLost(self, connector, reason):
-        self.app.onConnectionLost()
+        self.model.onConnectionLost()
 
 
