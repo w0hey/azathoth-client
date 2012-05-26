@@ -2,9 +2,9 @@ import gtk
 
 from gtkmvc import View
 
-from driveview import DriveView
-from jsview import JsView
-from barview import BarView
+from views.driveview import DriveView
+from views.jsview import JsView
+from views.barview import BarView
 
 class MainView(View):
     builder = "main.glade"

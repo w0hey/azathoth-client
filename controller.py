@@ -3,7 +3,7 @@ from gtkmvc import Controller
 from gtkmvc.adapters import Adapter
 from twisted.internet import reactor
 
-from drivecontroller import DriveController
+from controllers.drivecontroller import DriveController
 from joystick import Joystick
 
 class MainController(Controller):
