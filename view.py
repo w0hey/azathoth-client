@@ -4,6 +4,7 @@ from gtkmvc import View
 
 from driveview import DriveView
 from jsview import JsView
+from barview import BarView
 
 class MainView(View):
     builder = "main.glade"
@@ -14,24 +15,22 @@ class MainView(View):
         self.driveView = DriveView()
         self['vbox_sidebar_left'].pack_start(self.driveView.get_top_widget())
         self['hsep'] = gtk.HSeparator()
+        self['hsep'].show_all()
         self['vbox_sidebar_left'].pack_start(self['hsep'])
         self.jsView = JsView()
         self['vbox_sidebar_left'].pack_start(self.jsView.get_top_widget())
+        self.barView = BarView(self)
+        self['vbox_main'].pack_start(self.barView.get_top_widget())
+        self['vbox_main'].reorder_child(self.barView.get_top_widget(), 0)
     
     def setConnectState(self, state):
-        connected_controls = ('btn_disconnect', 'tb_estop', 'tb_reset', 'tb_calibrate',
-            'imi_calibration')
         if state == 'connecting':
             self['btn_disconnect'].set_sensitive(True)
             self['btn_connect'].set_sensitive(False)
         elif state == 'connected':
-            for control in connected_controls:
-                self[control].set_sensitive(True)
-                self.jsView.setSensitive(True)
-                self.driveView.setSensitive(True)
+            self.jsView.setSensitive(True)
+            self.driveView.setSensitive(True)
         elif state == 'disconnected':
-            for control in connected_controls:
-                self[control].set_sensitive(False)
-                self['btn_connect'].set_sensitive(True)
-                self.jsView.setSensitive(False)
-                self.driveView.setSensitive(False)
+            self['btn_connect'].set_sensitive(True)
+            self.jsView.setSensitive(False)
+            self.driveView.setSensitive(False)

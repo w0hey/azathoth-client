@@ -1,0 +1,12 @@
+<ui>
+	<menubar>
+		<menu action="file">
+			<menuitem action="exit"/>
+		</menu>
+	</menubar>
+	<toolbar>
+		<toolitem action="estop"/>
+		<toolitem action="reset"/>
+		<toolitem action="calibrate"/>
+	</toolbar>
+</ui>

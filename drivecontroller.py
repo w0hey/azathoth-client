@@ -35,11 +35,15 @@ class DriveController(Controller):
     def on_btn_deselect_clicked(self, btn):
         self.model.deselect()
 
-    def on_tb_estop_clicked(self, btn):
+    def on_estop_activate(self, action):
         self.model.estop()
 
-    def on_tb_reset_clicked(self, btn):
+    def on_reset_activate(self, action):
         self.model.reset()
+
+    def on_calibrate_activate(self, action):
+        #TODO
+        pass
 
     # special setters
     def estop_setter(self, wid, val):

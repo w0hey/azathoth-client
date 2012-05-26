@@ -19,12 +19,8 @@ class MainController(Controller):
     def on_window_main_delete_event(self, win, event):
         reactor.stop()
 
-    def on_imi_quit_activate(self, widget):
+    def on_exit_activate(self, action):
         reactor.stop()
-
-    def on_imi_calibration_activate(self, widget):
-        #TODO
-        pass
 
     def on_btn_connect_clicked(self, widget):
         host = self.view['entry_host'].get_text()
