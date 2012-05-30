@@ -16,10 +16,14 @@ class DriveModel(Model):
     cal_current_y = 0
     cal_eeprom_x = 0
     cal_eeprom_y = 0
+    deadman = True
+    counting = True
+    looper = None
 
     __observables__ = ("estop_act", "estop_cmd", "select_act", "select_cmd", "moving",
                         "xpos", "ypos", "xval", "yval", "cal_initial_x", "cal_initial_y",
-                        "cal_current_x", "cal_current_y", "cal_eeprom_x", "cal_eeprom_y")
+                        "cal_current_x", "cal_current_y", "cal_eeprom_x", "cal_eeprom_y",
+                        "deadman")
 
     def __init__(self, parent):
         Model.__init__(self)
@@ -27,9 +31,16 @@ class DriveModel(Model):
         self.factory = self.parent.factory
 
     def joystickCommand(self, x, y):
+        if not self.counting and (x | y != 0):
+            self.looper = task.LoopingCall(self.joystickCommand, (x, y))
+            self.looper.start(0.2) # Run every 200ms
         self.factory.control.send_joystick_command(x, y)
         self.parent.joy_x = x
         self.parent.joy_y = y
+        if self.counting:
+            self.looper.reset()
+            if (x | y = 0):
+                self.looper.stop()
 
     def onStatusUpdate(self, status, xpos, ypos, xval, yval):
         self.estop_act = 'RUN' if (status & 0x01 == 0x01) else 'STOP'
