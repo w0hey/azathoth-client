@@ -10,7 +10,7 @@ class MainController(Controller):
 
     def __init__(self, model, view):
         Controller.__init__(self, model, view)
-        self.driveController = DriveController(model, view.driveView)
+        self.driveController = DriveController(model.driveModel, view.driveView)
 
     def register_view(self, view):
         view.setConnectState('disconnected')
