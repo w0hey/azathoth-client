@@ -28,12 +28,16 @@ class JsController(Controller):
             self.joystick = Joystick(1)
         except:
             self.joystick_enabled = False
+            self.view['rb_js_enable'].set_active(False)
+            self.view['rb_js_disable'].set_active(True)
             return
         self.jsAxisHandler = self.joystick.connect('axis', self.on_axis_event)
         self.jsButtonHandler = self.joystick.connect('button', self.on_button_event)
 
     def disableJoystick(self):
         self.joystick_enabled = False
+        self.view['rb_js_enable'].set_active(True)
+        self.view['rb_js_disable'].set_active(False)
         if self.joystick is not None:
             self.joystick.disconnect(self.jsAxisHandler)
             self.joystick.disconnect(self.jsButtonHandler)
@@ -41,8 +45,10 @@ class JsController(Controller):
 
     # signal handlers
     def on_rb_js_enable_toggled(self, btn):
-        #TODO
-        pass
+        if btn.get_active():
+            self.enableJoystick()
+        else:
+            self.disableJoystick()
 
     def on_tb_calibrate_clicked(self, btn):
         #TODO
