@@ -1,6 +1,10 @@
+import logging
+
 import gtk
 from gtkmvc import Controller
 from gtkmvc.adapters import Adapter
+
+from joystick import Joystick
 
 class JsController(Controller):
     
@@ -23,21 +27,23 @@ class JsController(Controller):
         self.adapt(a)
 
     def enableJoystick(self):
+        logging.debug('enableJoystick')
         self.joystick_enabled = True
         try:
             self.joystick = Joystick(1)
         except:
             self.joystick_enabled = False
-            self.view['rb_js_enable'].set_active(False)
-            self.view['rb_js_disable'].set_active(True)
+            #self.view['rb_js_enable'].set_active(False)
+            #self.view['rb_js_disable'].set_active(True)
+            logging.error('could not enable joystick')
             return
         self.jsAxisHandler = self.joystick.connect('axis', self.on_axis_event)
         self.jsButtonHandler = self.joystick.connect('button', self.on_button_event)
 
     def disableJoystick(self):
         self.joystick_enabled = False
-        self.view['rb_js_enable'].set_active(True)
-        self.view['rb_js_disable'].set_active(False)
+        #self.view['rb_js_enable'].set_active(True)
+        #self.view['rb_js_disable'].set_active(False)
         if self.joystick is not None:
             self.joystick.disconnect(self.jsAxisHandler)
             self.joystick.disconnect(self.jsButtonHandler)
@@ -45,6 +51,7 @@ class JsController(Controller):
 
     # signal handlers
     def on_rb_js_enable_toggled(self, btn):
+        logging.debug('on_rb_js_enable_toggled')
         if btn.get_active():
             self.enableJoystick()
         else:
@@ -73,7 +80,7 @@ class JsController(Controller):
                 return
         else: # ignore other axises
             return
-        self.model.joystickCommand(self.joystick_x, self.joystick_y)
+        self.model.driveModel.joystickCommand(self.joystick_x, self.joystick_y)
 
     def on_button_event(self, object, button, value, init):
         pass

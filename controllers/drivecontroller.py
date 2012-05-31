@@ -1,3 +1,5 @@
+import logging
+
 import gtk
 from gtkmvc import Controller
 from gtkmvc.adapters import Adapter
@@ -62,6 +64,7 @@ class DriveController(Controller):
         eb.modify_bg(gtk.STATE_NORMAL, color)
 
     def select_setter(self, wid, val):
+        logging.debug('select_setter setting widget to val: %s' % val)
         if val == 'ROBOT':
             color = gtk.gdk.Color('#00FF00')
         elif val == 'CHAIR':
@@ -71,8 +74,10 @@ class DriveController(Controller):
         wid.set_label(val)
         
         if wid == self.view['label_select_act']:
+            logging.debug('select_setter using widget label_select_act')
             eb = self.view['eb_select_act']
-        else:
+        elif wid == self.view['label_select_cmd']:
+            logging.debug('select_setter using widget label_select_cmd')
             eb = self.view['eb_select_cmd']
         eb.modify_bg(gtk.STATE_NORMAL, color)
     

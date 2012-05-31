@@ -1,3 +1,5 @@
+import logging
+
 from gtkmvc import Model
 
 class DriveModel(Model):
@@ -31,20 +33,21 @@ class DriveModel(Model):
         self.factory = self.parent.factory
 
     def joystickCommand(self, x, y):
-        if not self.counting and (x | y != 0):
-            self.looper = task.LoopingCall(self.joystickCommand, (x, y))
-            self.looper.start(0.2) # Run every 200ms
+        #if not self.counting and (x | y != 0):
+        #    self.looper = task.LoopingCall(self.joystickCommand, (x, y))
+        #    self.looper.start(0.2) # Run every 200ms
         self.factory.control.send_joystick_command(x, y)
         self.parent.joy_x = x
         self.parent.joy_y = y
-        if self.counting:
-            self.looper.reset()
-            if (x | y = 0):
-                self.looper.stop()
+        #if self.counting:
+        #    self.looper.reset()
+        #    if (x | y == 0):
+        #        self.looper.stop()
 
     def onStatusUpdate(self, status, xpos, ypos, xval, yval):
+        logging.debug('status %x' % status)
         self.estop_act = 'RUN' if (status & 0x01 == 0x01) else 'STOP'
-        self.estop_cmd = 'RUN' if (status & 0x02 == 0x02) else 'STOP'
+        self.estop_cmd = 'STOP' if (status & 0x02 == 0x02) else 'RUN'
         self.select_act = 'ROBOT' if (status & 0x04 == 0x04) else 'CHAIR'
         self.select_cmd = 'ROBOT' if (status & 0x08 == 0x08) else 'CHAIR'
         self.moving = 'MOVING' if (status & 0x10 == 0x10) else 'STOPPED'

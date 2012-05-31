@@ -4,6 +4,7 @@ from gtkmvc.adapters import Adapter
 from twisted.internet import reactor
 
 from controllers.drivecontroller import DriveController
+from controllers.jscontroller import JsController
 from joystick import Joystick
 
 class MainController(Controller):
@@ -11,6 +12,7 @@ class MainController(Controller):
     def __init__(self, model, view):
         Controller.__init__(self, model, view)
         self.driveController = DriveController(model.driveModel, view.driveView)
+        self.jsController = JsController(model, view.jsView)
 
     def register_view(self, view):
         view.setConnectState('disconnected')

@@ -14,7 +14,8 @@ from model import MainModel
 if __name__ == "__main__":
     observer = log.PythonLoggingObserver()
     observer.start()
-    #logging.getLogger('gtkmvc').setLevel(logging.DEBUG)
+    logging.getLogger('gtkmvc').setLevel(logging.DEBUG)
+    logging.root.setLevel(logging.DEBUG)
     m = MainModel()
     v = MainView()
     c = MainController(m, v)

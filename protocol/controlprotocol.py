@@ -32,7 +32,7 @@ class ControlProtocol(NetstringReceiver):
             ypos = ord(string[3])
             xval = ord(string[4])
             yval = ord(string[5])
-            self.factory.app.onStatusUpdate(status, xpos, ypos, xval, yval)
+            self.factory.model.driveModel.onStatusUpdate(status, xpos, ypos, xval, yval)
 
     def req_cal_values(self):
         self.calibrate_d = defer.Deferred()
