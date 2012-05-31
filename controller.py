@@ -37,7 +37,7 @@ class MainController(Controller):
         if info.new:
             self.view.setConnectState('connected')
         else:
-            self.view.setConnected('disconnected')
+            self.view.setConnectState('disconnected')
 
     # special setters
 
