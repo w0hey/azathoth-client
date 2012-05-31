@@ -28,9 +28,12 @@ class MainView(View):
             self['btn_disconnect'].set_sensitive(True)
             self['btn_connect'].set_sensitive(False)
         elif state == 'connected':
+            self['btn_disconnect'].set_sensitive(True)
+            self['btn_connect'].set_sensitive(False)
             self.jsView.setSensitive(True)
             self.driveView.setSensitive(True)
         elif state == 'disconnected':
             self['btn_connect'].set_sensitive(True)
+            self['btn_disconnect'].set_sensitive(False)
             self.jsView.setSensitive(False)
             self.driveView.setSensitive(False)
