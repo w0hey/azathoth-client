@@ -1,3 +1,5 @@
+import ConfigParser
+
 import gtk
 from gtkmvc import Controller
 from gtkmvc.adapters import Adapter
@@ -9,13 +11,19 @@ from joystick import Joystick
 
 class MainController(Controller):
 
-    def __init__(self, model, view):
+    def __init__(self, model, view, config):
         Controller.__init__(self, model, view)
+        self.config = config
         self.driveController = DriveController(model.driveModel, view.driveView)
         self.jsController = JsController(model, view.jsView)
 
     def register_view(self, view):
         view.setConnectState('disconnected')
+        try:
+            host = self.config.get('connection', 'host')
+        except ConfigParser.NoSectionError:
+            host = ''
+        self.view['entry_host'].set_text(host)
 
     # signal handlers
     def on_window_main_delete_event(self, win, event):

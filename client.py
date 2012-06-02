@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import logging
+import ConfigParser
 
 from twisted.internet import gtk2reactor
 gtk2reactor.install()
@@ -16,7 +17,9 @@ if __name__ == "__main__":
     observer.start()
     logging.getLogger('gtkmvc').setLevel(logging.DEBUG)
     logging.root.setLevel(logging.DEBUG)
+    config = ConfigParser.RawConfigParser()
+    config.read('client.cfg')
     m = MainModel()
     v = MainView()
-    c = MainController(m, v)
+    c = MainController(m, v, config)
     reactor.run()
