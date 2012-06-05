@@ -72,13 +72,14 @@ class JsController(Controller):
             self.joystick_x = value / 256
             if self.joystick_x == self.prev_x:
                 return
-        if axis == 1:
+        elif axis == 1:
             # this axis needs to be inverted
             self.prev_y = self.joystick_y
             self.joystick_y = -value / 256
             if self.joystick_y == self.prev_y:
                 return
         else: # ignore other axises
+            logging.debug("unexpected axis event - axis %d" % axis)
             return
         self.model.driveModel.joystickCommand(self.joystick_x, self.joystick_y)
 
