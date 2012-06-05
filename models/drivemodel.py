@@ -19,14 +19,12 @@ class DriveModel(Model):
     cal_current_y = 0
     cal_eeprom_x = 0
     cal_eeprom_y = 0
-    deadman = True
     counting = False
     looper = None
 
     __observables__ = ("estop_act", "estop_cmd", "select_act", "select_cmd", "moving",
                         "xpos", "ypos", "xval", "yval", "cal_initial_x", "cal_initial_y",
-                        "cal_current_x", "cal_current_y", "cal_eeprom_x", "cal_eeprom_y",
-                        "deadman")
+                        "cal_current_x", "cal_current_y", "cal_eeprom_x", "cal_eeprom_y")
 
     def __init__(self, parent):
         Model.__init__(self)
