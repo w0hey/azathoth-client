@@ -8,8 +8,9 @@ class MainModel(Model):
     connected = False
     joy_x = 0
     joy_y = 0
+    sonar_range = 0
     
-    __observables__ = ("connected", "joy_x", "joy_y")
+    __observables__ = ("connected", "joy_x", "joy_y", "sonar_range")
 
     def __init__(self):
         Model.__init__(self)
@@ -31,3 +32,5 @@ class MainModel(Model):
     def onConnectionLost(self):
         self.connected = False
 
+    def onSonarUpdate(self, range):
+        self.sonar_range = range
