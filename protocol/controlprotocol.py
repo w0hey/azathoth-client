@@ -35,7 +35,7 @@ class ControlProtocol(NetstringReceiver):
             self.factory.model.driveModel.onStatusUpdate(status, xpos, ypos, xval, yval)
         elif string[0] == 'r':
             # sonar range response
-            self.factory.model.onSonarUpdate(ord(string[1])
+            self.factory.model.onSonarUpdate(ord(string[1]))
 
     def req_cal_values(self):
         self.calibrate_d = defer.Deferred()
