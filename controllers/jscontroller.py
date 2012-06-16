@@ -30,7 +30,7 @@ class JsController(Controller):
         logging.debug('enableJoystick')
         self.joystick_enabled = True
         try:
-            self.joystick = Joystick(1)
+            self.joystick = Joystick(0)
         except:
             self.joystick_enabled = False
             #self.view['rb_js_enable'].set_active(False)

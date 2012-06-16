@@ -10,3 +10,4 @@ class DriveView(View):
         self['btn_select'].set_sensitive(sensitive)
         self['btn_deselect'].set_sensitive(sensitive)
         self['actgrp_drive'].set_sensitive(sensitive)
+        

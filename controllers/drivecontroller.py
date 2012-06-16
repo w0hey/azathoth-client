@@ -30,6 +30,23 @@ class DriveController(Controller):
         a.connect_widget(self.view['label_drivestatus'], setter=self.drivestatus_setter)
         self.adapt(a)
 
+        a = Adapter(self.model, 'xpos')
+        a.connect_widget(self.view['label_drive_x'], setter=self.drivevalues_setter)
+        self.adapt(a)
+
+        a = Adapter(self.model, 'ypos')
+        a.connect_widget(self.view['label_drive_y'], setter=self.drivevalues_setter)
+        self.adapt(a)
+
+        a = Adapter(self.model, 'xval')
+        a.connect_widget(self.view['label_raw_x'], setter=self.drivevalues_setter)
+        self.adapt(a)
+
+        a = Adapter(self.model, 'yval')
+        a.connect_widget(self.view['label_raw_y'], setter=self.drivevalues_setter)
+        self.adapt(a)
+
+
 
     def on_btn_select_clicked(self, btn):
         self.model.select()
@@ -44,8 +61,12 @@ class DriveController(Controller):
         self.model.reset()
 
     def on_calibrate_activate(self, action):
-        #TODO
-        pass
+        from views.calibrationview import CalibrationView
+        from controllers.calibrationcontroller import CalibrationController
+        v = CalibrationView()
+        c = CalibrationController(self.model, v)
+        v.run()
+        self.model.unregister_observer(c)
 
     # special setters
     def estop_setter(self, wid, val):
@@ -88,6 +109,9 @@ class DriveController(Controller):
             color = None
         wid.set_label(val)
         self.view['eb_drivestatus'].modify_bg(gtk.STATE_NORMAL, color)
+
+    def drivevalues_setter(self, wid, val):
+        wid.set_label(str(val))
 
     def joystick_setter(self, wid, val):
         if val != 0:
