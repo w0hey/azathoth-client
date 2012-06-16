@@ -5,6 +5,7 @@ from gtkmvc import View
 from views.driveview import DriveView
 from views.jsview import JsView
 from views.barview import BarView
+from views.videoview import VideoView
 
 class MainView(View):
     builder = "main.glade"
@@ -19,6 +20,9 @@ class MainView(View):
         self['vbox_sidebar_left'].pack_start(self['hsep'])
         self.jsView = JsView()
         self['vbox_sidebar_left'].pack_start(self.jsView.get_top_widget())
+        self.videoView = VideoView()
+        self['hbox1'].pack_start(self.videoView.get_top_widget())
+        self['hbox1'].reorder_child(self.videoView.get_top_widget(), 1)
         self.barView = BarView(self)
         self['vbox_main'].pack_start(self.barView.get_top_widget())
         self['vbox_main'].reorder_child(self.barView.get_top_widget(), 0)

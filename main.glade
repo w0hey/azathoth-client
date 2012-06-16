@@ -4,9 +4,7 @@
   <!-- interface-naming-policy project-wide -->
   <object class="GtkActionGroup" id="actgrp_main">
     <child>
-      <object class="GtkAction" id="file">
-        <property name="label" translatable="yes">File</property>
-      </object>
+      <object class="GtkAction" id="toolbar"/>
     </child>
     <child>
       <object class="GtkAction" id="exit">
@@ -15,7 +13,9 @@
       </object>
     </child>
     <child>
-      <object class="GtkAction" id="toolbar"/>
+      <object class="GtkAction" id="file">
+        <property name="label" translatable="yes">File</property>
+      </object>
     </child>
   </object>
   <object class="GtkWindow" id="window_main">
@@ -138,17 +138,7 @@
               </packing>
             </child>
             <child>
-              <object class="GtkDrawingArea" id="da_video">
-                <property name="width_request">320</property>
-                <property name="height_request">240</property>
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-              </object>
-              <packing>
-                <property name="expand">True</property>
-                <property name="fill">True</property>
-                <property name="position">1</property>
-              </packing>
+              <placeholder/>
             </child>
             <child>
               <object class="GtkVBox" id="vbox_sidebar_right">

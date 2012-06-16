@@ -7,6 +7,7 @@ from twisted.internet import reactor
 
 from controllers.drivecontroller import DriveController
 from controllers.jscontroller import JsController
+from controllers.videocontroller import VideoController
 from joystick import Joystick
 
 class MainController(Controller):
@@ -16,6 +17,7 @@ class MainController(Controller):
         self.config = config
         self.driveController = DriveController(model.driveModel, view.driveView)
         self.jsController = JsController(model, view.jsView)
+        self.videoController = VideoController(model, view.videoView)
 
     def register_view(self, view):
         view.setConnectState('disconnected')
