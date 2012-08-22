@@ -16,7 +16,11 @@ class MainController(Controller):
         Controller.__init__(self, model, view)
         self.config = config
         self.driveController = DriveController(model.driveModel, view.driveView)
-        self.jsController = JsController(model, view.jsView)
+        try:
+            jsdevnum = self.config.get('joystick', 'jsdevnum')
+        except ConfigParser.NoSectionError:
+            jsdevnum = 0
+        self.jsController = JsController(model, view.jsView, jsdevnum)
         self.videoController = VideoController(model, view.videoView)
 
     def register_view(self, view):

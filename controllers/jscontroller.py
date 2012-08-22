@@ -8,8 +8,9 @@ from joystick import Joystick
 
 class JsController(Controller):
     
-    def __init__(self, model, view):
+    def __init__(self, model, view, jsdevnum):
         Controller.__init__(self, model, view)
+        self.jsdevnum = jsdevnum
         self.joystick = None
         self.joystick_x = 0
         self.joystick_y = 0
@@ -30,7 +31,7 @@ class JsController(Controller):
         logging.debug('enableJoystick')
         self.joystick_enabled = True
         try:
-            self.joystick = Joystick(0)
+            self.joystick = Joystick(self.jsdevnum)
         except:
             self.joystick_enabled = False
             #self.view['rb_js_enable'].set_active(False)
