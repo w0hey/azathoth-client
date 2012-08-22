@@ -29,6 +29,9 @@ class MainModel(Model):
     def onConnect(self):
         self.connected = True
 
+    def onConnectionFailed(self, reason):
+        self.connected = False
+
     def onConnectionLost(self):
         self.connected = False
 
