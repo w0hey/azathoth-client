@@ -94,10 +94,8 @@ class DriveController(Controller):
         wid.set_label(val)
         
         if wid == self.view['label_select_act']:
-            logging.debug('select_setter using widget label_select_act')
             eb = self.view['eb_select_act']
         elif wid == self.view['label_select_cmd']:
-            logging.debug('select_setter using widget label_select_cmd')
             eb = self.view['eb_select_cmd']
         eb.modify_bg(gtk.STATE_NORMAL, color)
     
