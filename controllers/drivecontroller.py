@@ -85,7 +85,6 @@ class DriveController(Controller):
         eb.modify_bg(gtk.STATE_NORMAL, color)
 
     def select_setter(self, wid, val):
-        logging.debug('select_setter setting widget to val: %s' % val)
         if val == 'ROBOT':
             color = gtk.gdk.Color('#00FF00')
         elif val == 'CHAIR':

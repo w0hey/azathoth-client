@@ -80,7 +80,6 @@ class JsController(Controller):
             if self.joystick_y == self.prev_y:
                 return
         else: # ignore other axises
-            logging.debug("unexpected axis event - axis %d" % axis)
             return
         self.model.driveModel.joystickCommand(self.joystick_x, self.joystick_y)
 
