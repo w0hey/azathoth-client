@@ -9,7 +9,7 @@ from gtkmvc import Controller
 
 class VideoController(Controller):
 
-    tempcaps = gst.Caps("application/x-rtp, media=(string)video, clock-rate=(int)90000, encoding-name=(string)MP4V-ES, profile-level-id=(string)5, config=(string)000001b005000001b50900000100000001200086e00029c42003a00065304ba98514043c1463, payload=(int)96")
+    tempcaps = gst.Caps("application/x-rtp, media=(string)video, clock-rate=(int)90000, encoding-name=(string)MP4V-ES, profile-level-id=(string)5, payload=(int)96")
 
     def register_view(self, view):
         self.videoWindow = self.view.get_top_widget()
